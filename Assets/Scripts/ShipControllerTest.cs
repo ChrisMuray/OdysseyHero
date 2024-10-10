@@ -18,6 +18,11 @@ public class ShipControllerTest : MonoBehaviour
         return currentView;
     }
 
+    public bool GetLookingRight()
+    {
+        return Vector3.Dot(Camera.main.transform.forward, transform.right) > 0;
+    }
+
     public void SetSpeedModifier(float speedModifier)
     {
         m_speedModifier = speedModifier;
