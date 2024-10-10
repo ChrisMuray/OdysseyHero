@@ -72,7 +72,7 @@ public class ShipControllerTest : MonoBehaviour
         if (input.magnitude > 0)
         {
             // Rotate rigidbody with torque
-            Vector3 newForward = Vector3.RotateTowards(transform.forward, velocity.normalized, m_movementStats.turnSpeed, 1f);
+            Vector3 newForward = Vector3.RotateTowards(transform.forward, velocity.normalized, m_movementStats.turnSpeed * Time.deltaTime, 1f);
             Vector3 omega = -m_movementStats.turnSpeed * Vector3.up * Vector3.SignedAngle(newForward, transform.forward, Vector3.up) * Time.deltaTime;
             m_rigidBody.AddTorque(omega - m_rigidBody.angularVelocity, ForceMode.VelocityChange);
         }
@@ -94,6 +94,7 @@ public class ShipControllerTest : MonoBehaviour
             CameraManager.View.FirstPerson => firstPersonStats,
             _ => throw new ArgumentException($"No MovementStats for View {view}.")
         };
+        m_rigidBody.velocity = Mathf.Clamp(m_rigidBody.velocity.magnitude, 0, m_movementStats.maxSpeed) * m_rigidBody.velocity.normalized;
     }
 
     private Vector3 LevelNormalVector(Vector3 vector)

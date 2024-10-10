@@ -81,7 +81,6 @@ public class Health : MonoBehaviour
     {
         if (collider.TryGetComponent<Damage>(out Damage damage))
         {
-            Debug.Log("YOUCH!!");
             SetHealth(m_health - damage.value);
         }
     }

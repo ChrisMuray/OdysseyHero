@@ -56,12 +56,12 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""FirstPerson"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""67f7d245-560f-4af5-94c1-997a6ef45a40"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""ToggleControlsMenu"",
@@ -206,7 +206,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""5f80c019-fab6-4120-a26b-f2b1a59836ba"",
                     ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""FirstPerson"",

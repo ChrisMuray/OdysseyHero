@@ -31,7 +31,7 @@ public class Crosshair : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (m_cameraManager.GetView() != CameraManager.View.Overhead)
         {
