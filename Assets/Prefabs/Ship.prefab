@@ -56,17 +56,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overheadStats:
     maxSpeed: 10
-    turnSpeed: 20
+    turnSpeed: 25
     acceleration: 2
     deceleration: 0.1
   thirdPersonStats:
     maxSpeed: 5
-    turnSpeed: 8
+    turnSpeed: 15
     acceleration: 1
     deceleration: 0.05
   firstPersonStats:
     maxSpeed: 1
-    turnSpeed: 2
+    turnSpeed: 5
     acceleration: 0.5
     deceleration: 0.025
 --- !u!114 &5788234823082274183
