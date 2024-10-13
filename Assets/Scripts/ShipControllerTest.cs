@@ -42,6 +42,9 @@ public class ShipControllerTest : MonoBehaviour
     private CameraManager m_cameraManager;
     private CameraManager.View currentView = CameraManager.View.Overhead;
     private Rigidbody m_rigidBody;
+    private Vector2 m_input;
+    private Vector3 m_velocity;
+    private Vector3 m_angularVelocity;
 
     private void Awake()
     {
@@ -65,21 +68,28 @@ public class ShipControllerTest : MonoBehaviour
         Vector3 rightDir = LevelNormalVector(mainCam.right);
 
         // Movement input
-        Vector2 input = m_inputManager.GetMovement();
-        Vector3 movementDir = (input.x * rightDir + input.y * forwardDir).normalized;
+        m_input = m_inputManager.GetMovement();
+        Vector3 movementDir = (m_input.x * rightDir + m_input.y * forwardDir).normalized;
         Vector3 targetVelocity = m_speedModifier * m_movementStats.maxSpeed * movementDir; // Vector3.zero if no input
 
         // Move towards target velocity and apply force to rigidbody to play nicely with built in physics collisions
-        float acc = input.magnitude > 0 ? m_movementStats.acceleration : m_movementStats.deceleration;
-        Vector3 velocity = Vector3.MoveTowards(m_rigidBody.velocity, targetVelocity, acc);
-        m_rigidBody.AddForce(velocity - m_rigidBody.velocity, ForceMode.VelocityChange);
+        float acc = m_input.magnitude > 0 ? m_movementStats.acceleration : m_movementStats.deceleration;
+        m_velocity = Vector3.MoveTowards(m_rigidBody.velocity, targetVelocity, acc);
 
-        if (input.magnitude > 0)
+        if (m_input.magnitude > 0)
         {
             // Rotate rigidbody with torque
-            Vector3 newForward = Vector3.RotateTowards(transform.forward, velocity.normalized, m_movementStats.turnSpeed * Time.deltaTime, 1f);
-            Vector3 omega = -m_movementStats.turnSpeed * Vector3.up * Vector3.SignedAngle(newForward, transform.forward, Vector3.up) * Time.deltaTime;
-            m_rigidBody.AddTorque(omega - m_rigidBody.angularVelocity, ForceMode.VelocityChange);
+            Vector3 newForward = Vector3.RotateTowards(transform.forward, m_velocity.normalized, m_movementStats.turnSpeed * Time.deltaTime, 1f);
+            m_angularVelocity = -m_movementStats.turnSpeed * Vector3.up * Vector3.SignedAngle(newForward, transform.forward, Vector3.up) * Mathf.PI / 180f; // convert to radians
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        m_rigidBody.AddForce(m_velocity - m_rigidBody.velocity, ForceMode.VelocityChange);
+        if (m_input.magnitude > 0)
+        {
+            m_rigidBody.AddTorque(m_angularVelocity - m_rigidBody.angularVelocity, ForceMode.VelocityChange);
         }
     }
 

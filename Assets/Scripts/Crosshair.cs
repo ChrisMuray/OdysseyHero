@@ -40,16 +40,19 @@ public class Crosshair : MonoBehaviour
         }
         InputManager.DeviceType device = m_inputManager.GetDeviceType();
         Vector2 look = m_inputManager.GetLook();
+
+        Debug.Log(Input.mousePosition);
+
         if (device == InputManager.DeviceType.KeyboardMouse)
         {
             m_image.enabled = true;
-            m_rectTransform.position = Input.mousePosition;
+            m_rectTransform.anchoredPosition = Input.mousePosition;
         }
         else if (device == InputManager.DeviceType.Gamepad && look.magnitude > 0)
         {
             m_image.enabled = true;
             Vector2 center = m_target ? m_cam.WorldToScreenPoint(m_target.position) : new Vector2(Screen.width, Screen.height) / 2;
-            m_rectTransform.position = center + m_crosshairRadius * look.normalized;
+            m_rectTransform.anchoredPosition = center + m_crosshairRadius * look.normalized;
         }
         else
         {

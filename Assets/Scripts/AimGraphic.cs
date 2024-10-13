@@ -9,6 +9,12 @@ public class AimGraphic : MonoBehaviour
     [SerializeField] private DecalProjector aimLeft;
     [SerializeField] private DecalProjector aimRight;
 
+    private void Start()
+    {
+        aimLeft.fadeFactor = 0f;
+        aimRight.fadeFactor = 0f;
+    }
+
     private void Update()
     {
         if (player.GetCurrentView() != CameraManager.View.ThirdPerson)

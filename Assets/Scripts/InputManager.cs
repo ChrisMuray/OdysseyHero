@@ -40,12 +40,13 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
+        // Remove limit on event bytes per update
+        InputSystem.settings.maxEventBytesPerUpdate = 0;
+
         // Set up input events for discrete things like button presses
         m_inputs = new Inputs();
 
         m_inputs.Ship.ToggleCamera.performed += (context) => OnToggleCamera?.Invoke(this, EventArgs.Empty);
-
-        // m_inputs.Ship.FirstPerson.performed += FirstPersonDown;
 
         m_inputs.Ship.FirstPerson.performed += (context) => OnFirstPersonDown?.Invoke(this, EventArgs.Empty);
         m_inputs.Ship.FirstPerson.canceled += (context) => OnFirstPersonUp?.Invoke(this, EventArgs.Empty);
@@ -53,29 +54,11 @@ public class InputManager : MonoBehaviour
         m_inputs.Ship.Boost.performed += (context) => OnBoostDown?.Invoke(this, EventArgs.Empty);
         m_inputs.Ship.Boost.canceled += (context) => OnBoostUp?.Invoke(this, EventArgs.Empty);
 
-        // m_inputs.Ship.Shoot.performed += ShootDown;
         m_inputs.Ship.Shoot.performed += (context) => OnShootDown?.Invoke(this, EventArgs.Empty);
         m_inputs.Ship.Shoot.canceled += (context) => OnShootUp?.Invoke(this, EventArgs.Empty);
 
         m_inputs.Ship.ToggleControlsMenu.performed += (context) => OnToggleControlsMenu?.Invoke(this, EventArgs.Empty);
     }
-
-    // private void FirstPersonDown(InputAction.CallbackContext context)
-    // {
-    //     if (context.control is ButtonControl buttonControl && buttonControl.isPressed)
-    //     {
-    //         OnFirstPersonDown?.Invoke(this, EventArgs.Empty);
-    //     }
-    // }
-
-    // private void ShootDown(InputAction.CallbackContext context)
-    // {
-    //     if (context.control is ButtonControl buttonControl && buttonControl.isPressed)
-    //     {
-    //         OnShootDown?.Invoke(this, EventArgs.Empty);
-    //     }
-    // }
-
 
     private void OnEnable()
     {
