@@ -27,13 +27,10 @@ public class CameraManager : MonoBehaviour
         return View.None;
     }
 
-    // public IEnumerator Shake()
-    // {
-    //     float shakeTime = 0.5f;
-    //     for (int i = 0; i < 3; i++) {
-    //         m_thirdPersonCam.GetRig(i).
-    //     }
-    // }
+    public void ThirdPersonShake()
+    {
+        StartCoroutine(ThirdPersonShakeCoroutine(true));
+    }
 
     private InputManager m_inputManager;
 
@@ -105,6 +102,25 @@ public class CameraManager : MonoBehaviour
     private void ExitFPV()
     {
         Select(GetRememberedCam());
+    }
+
+    private IEnumerator ThirdPersonShakeCoroutine(bool shake)
+    {
+        float shakeTime = 0.5f;
+        float shakeAmplitude = 4f;
+        for (int i = 0; i < 3; i++)
+        {
+            m_thirdPersonCam.GetRig(i).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = shake ? shakeAmplitude : 0f;
+        }
+        if (shake)
+        {
+            yield return new WaitForSeconds(shakeTime);
+            StartCoroutine(ThirdPersonShakeCoroutine(false));
+        }
+        else
+        {
+            yield break;
+        }
     }
 
 }
