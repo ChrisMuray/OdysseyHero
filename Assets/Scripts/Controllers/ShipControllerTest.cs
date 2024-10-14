@@ -15,7 +15,7 @@ public class ShipControllerTest : MonoBehaviour
 
     public CameraManager.View GetCurrentView()
     {
-        return currentView;
+        return m_currentView;
     }
 
     public bool GetLookingRight()
@@ -29,18 +29,15 @@ public class ShipControllerTest : MonoBehaviour
     }
 
     // Might makes these ScriptableObjects...
-    [SerializeField]
-    private MovementStats overheadStats = new MovementStats { maxSpeed = 10f, turnSpeed = 10f, acceleration = 2f, deceleration = 0.1f };
-    [SerializeField]
-    private MovementStats thirdPersonStats = new MovementStats { maxSpeed = 5f, turnSpeed = 2f, acceleration = 1f, deceleration = 0.05f };
-    [SerializeField]
-    private MovementStats firstPersonStats = new MovementStats { maxSpeed = 1f, turnSpeed = 1f, acceleration = 0.5f, deceleration = 0.025f };
+    [SerializeField] private MovementStats m_overheadStats;
+    [SerializeField] private MovementStats m_thirdPersonStats;
+    [SerializeField] private MovementStats m_firstPersonStats;
 
     private MovementStats m_movementStats;
     private float m_speedModifier = 1f;
     private InputManager m_inputManager;
     private CameraManager m_cameraManager;
-    private CameraManager.View currentView = CameraManager.View.Overhead;
+    private CameraManager.View m_currentView = CameraManager.View.Overhead;
     private Rigidbody m_rigidBody;
     private Vector2 m_input;
     private Vector3 m_velocity;
@@ -49,7 +46,7 @@ public class ShipControllerTest : MonoBehaviour
     private void Awake()
     {
         m_rigidBody = GetComponent<Rigidbody>();
-        m_movementStats = overheadStats;
+        m_movementStats = m_overheadStats;
     }
 
     private void Start()
@@ -101,12 +98,12 @@ public class ShipControllerTest : MonoBehaviour
 
     private void SetCurrentView(CameraManager.View view)
     {
-        currentView = view;
+        m_currentView = view;
         m_movementStats = view switch
         {
-            CameraManager.View.Overhead => overheadStats,
-            CameraManager.View.ThirdPerson => thirdPersonStats,
-            CameraManager.View.FirstPerson => firstPersonStats,
+            CameraManager.View.Overhead => m_overheadStats,
+            CameraManager.View.ThirdPerson => m_thirdPersonStats,
+            CameraManager.View.FirstPerson => m_firstPersonStats,
             _ => throw new ArgumentException($"No MovementStats for View {view}.")
         };
         m_rigidBody.velocity = Mathf.Clamp(m_rigidBody.velocity.magnitude, 0, m_movementStats.maxSpeed) * m_rigidBody.velocity.normalized;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using Cinemachine;
 using UnityEngine;
@@ -25,6 +26,14 @@ public class CameraManager : MonoBehaviour
         if (currentCam == m_firstPersonCam) { return View.FirstPerson; }
         return View.None;
     }
+
+    // public IEnumerator Shake()
+    // {
+    //     float shakeTime = 0.5f;
+    //     for (int i = 0; i < 3; i++) {
+    //         m_thirdPersonCam.GetRig(i).
+    //     }
+    // }
 
     private InputManager m_inputManager;
 

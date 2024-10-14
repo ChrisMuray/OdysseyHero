@@ -1,13 +1,18 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class AimGraphic : MonoBehaviour
+public class CannonAimGraphic : MonoBehaviour
 {
-
-    [SerializeField] private ShipControllerTest player;
     [SerializeField] private float enabledOpacity = 0.5f;
     [SerializeField] private DecalProjector aimLeft;
     [SerializeField] private DecalProjector aimRight;
+
+    private ShipControllerTest player;
+
+    private void Awake()
+    {
+        player = transform.parent.GetComponent<ShipControllerTest>();
+    }
 
     private void Start()
     {

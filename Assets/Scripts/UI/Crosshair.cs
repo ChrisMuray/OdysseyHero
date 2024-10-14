@@ -41,8 +41,6 @@ public class Crosshair : MonoBehaviour
         InputManager.DeviceType device = m_inputManager.GetDeviceType();
         Vector2 look = m_inputManager.GetLook();
 
-        Debug.Log(Input.mousePosition);
-
         if (device == InputManager.DeviceType.KeyboardMouse)
         {
             m_image.enabled = true;
